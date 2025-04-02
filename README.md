@@ -1,12 +1,72 @@
-# React + Vite
+# WebPilotX Home
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to `WebPilotX Home`, a modern web application built with Vite, React, and Express.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dynamic Title**: The application dynamically uses the title from the environment variable `VITE_TITLE`.
+- **JWT Authentication**: Verifies JWT tokens using the `jose` library.
+- **Express Backend**: Includes an Express server integrated with Vite for seamless development.
+- **Responsive Design**: Styled with Tailwind CSS for a modern and responsive UI.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory and add the following variables:
+   ```env
+   VITE_TITLE=WebPilotX Home
+   VITE_PUBLIC_KEY=YourPublicKeyHere
+   PORT=3000
+   ```
+
+### Running the Application
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
+
+### API Endpoints
+
+- **GET /message**: Returns a simple message from the Express backend.
+
+## Project Structure
+
+```
+/home/chientrm/home
+├── index.html          # Main HTML file
+├── src
+│   ├── main.jsx        # React entry point
+│   ├── index.css       # Global styles
+├── server.js           # Express server
+├── README.md           # Project documentation
+```
+
+## License
+
+This project is licensed under the MIT License.
