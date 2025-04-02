@@ -21,8 +21,8 @@ Welcome to `WebPilotX Home`, a modern web application built with Vite, React, an
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/webpilotx/home
+   cd home
    ```
 
 2. Install dependencies:
