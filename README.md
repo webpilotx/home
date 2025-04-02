@@ -14,7 +14,7 @@ Welcome to `WebPilotX Home`, a modern web application built with Vite, React, an
 ### Prerequisites
 
 - Node.js (version 16 or higher)
-- npm or yarn
+- pnpm
 
 ### Installation
 
@@ -28,22 +28,22 @@ Welcome to `WebPilotX Home`, a modern web application built with Vite, React, an
 2. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. Create a `.env` file in the root directory and add the following variables:
    ```env
    VITE_TITLE=WebPilotX Home
-   VITE_PUBLIC_KEY=YourPublicKeyHere
-   PORT=3000
+   VITE_PUBLIC_KEY=Your RSA256 SPKI Public Key Here
+   PORT=3000 # Optional, defaults to 3000 if not set
    ```
 
-### Running the Application
+### Running the Application in Development
 
 1. Start the development server:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 2. Open your browser and navigate to:
@@ -51,21 +51,24 @@ Welcome to `WebPilotX Home`, a modern web application built with Vite, React, an
    http://localhost:3000
    ```
 
-### API Endpoints
+### Building and Running the Application in Production
 
-- **GET /message**: Returns a simple message from the Express backend.
+1. Build the application:
 
-## Project Structure
+   ```bash
+   pnpm build
+   ```
 
-```
-/home/chientrm/home
-├── index.html          # Main HTML file
-├── src
-│   ├── main.jsx        # React entry point
-│   ├── index.css       # Global styles
-├── server.js           # Express server
-├── README.md           # Project documentation
-```
+2. Start the production server:
+
+   ```bash
+   NODE_ENV=production node server.js
+   ```
+
+3. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
 
 ## License
 
