@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [onlineApps, setOnlineApps] = useState([]);
+  const [appStatuses, setAppStatuses] = useState({});
   const appPrefixes = import.meta.env.VITE_APPS.split(",").map(
     (app) => `/${app}`
   );
@@ -26,19 +26,25 @@ function App() {
       }
     }
 
-    async function checkAppsStatus() {
-      const onlineApps = [];
-      for (const prefix of appPrefixes) {
-        try {
-          const response = await fetch(prefix, { method: "HEAD" });
-          if (response.ok) {
-            onlineApps.push(prefix);
-          }
-        } catch (error) {
-          console.warn(`App at ${prefix} is offline:`, error);
+    async function checkAppStatus(prefix) {
+      setAppStatuses((prev) => ({ ...prev, [prefix]: "Checking" }));
+      try {
+        const response = await fetch(prefix, { method: "HEAD" });
+        if (response.ok) {
+          setAppStatuses((prev) => ({ ...prev, [prefix]: "Online" }));
+        } else {
+          setAppStatuses((prev) => ({ ...prev, [prefix]: "Offline" }));
         }
+      } catch (error) {
+        console.warn(`App at ${prefix} is offline:`, error);
+        setAppStatuses((prev) => ({ ...prev, [prefix]: "Offline" }));
       }
-      setOnlineApps(onlineApps);
+    }
+
+    function checkAppsStatus() {
+      appPrefixes.forEach((prefix) => {
+        checkAppStatus(prefix);
+      });
     }
 
     verifyToken();
@@ -77,25 +83,29 @@ function App() {
         <div className="w-full max-w-4xl bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Available Apps</h2>
           <ul className="space-y-4">
-            {onlineApps.length > 0 ? (
-              onlineApps.map((app) => (
-                <li key={app} className="flex items-center">
-                  <a
-                    href={app}
-                    className="flex-1 text-lg font-medium text-blue-600 hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {app.replace("/", "").toUpperCase()}
-                  </a>
-                  <span className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded-md">
-                    Online
-                  </span>
-                </li>
-              ))
-            ) : (
-              <li className="text-gray-500">No apps are currently online.</li>
-            )}
+            {appPrefixes.map((app) => (
+              <li key={app} className="flex items-center">
+                <a
+                  href={app}
+                  className="flex-1 text-lg font-medium text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {app.replace("/", "").toUpperCase()}
+                </a>
+                <span
+                  className={`px-3 py-1 text-sm rounded-md ${
+                    appStatuses[app] === "Online"
+                      ? "bg-green-100 text-green-800"
+                      : appStatuses[app] === "Offline"
+                      ? "bg-red-100 text-red-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}
+                >
+                  {appStatuses[app] || "Checking"}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
