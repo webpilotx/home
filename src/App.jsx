@@ -1,6 +1,5 @@
 import { importSPKI, jwtVerify } from "jose";
 import { useEffect, useState } from "react";
-import "./index.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
