@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [onlineApps, setOnlineApps] = useState([]);
+  const appPrefixes = ["/weather"];
 
   useEffect(() => {
-    console.log("VITE_PUBLIC_KEY:", import.meta.env.VITE_PUBLIC_KEY); // Log VITE_PUBLIC_KEY
-
     async function verifyToken() {
       try {
         const token = localStorage.getItem("token");
@@ -24,7 +24,23 @@ function App() {
       }
     }
 
+    async function checkAppsStatus() {
+      const onlineApps = [];
+      for (const prefix of appPrefixes) {
+        try {
+          const response = await fetch(prefix, { method: "HEAD" });
+          if (response.ok) {
+            onlineApps.push(prefix);
+          }
+        } catch (error) {
+          console.warn(`App at ${prefix} is offline:`, error);
+        }
+      }
+      setOnlineApps(onlineApps);
+    }
+
     verifyToken();
+    checkAppsStatus();
   }, []);
 
   const title = import.meta.env.VITE_TITLE;
@@ -52,7 +68,26 @@ function App() {
         </div>
       </nav>
       <div className="flex items-center justify-center min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-        <h1 className="text-4xl font-bold">Welcome to {title}</h1>
+        <div>
+          <h1 className="text-4xl font-bold">Welcome to {title}</h1>
+          <div className="mt-4">
+            <h2 className="text-2xl">Available Apps:</h2>
+            <ul>
+              {onlineApps.map((app) => (
+                <li key={app}>
+                  <a
+                    href={app}
+                    className="text-blue-600 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {app}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
