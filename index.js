@@ -1,13 +1,11 @@
 import "dotenv/config";
 import express from "express";
-import ViteExpress from "vite-express";
+import api from "./api.js";
 
 const PORT = process.env.PORT || 3000;
 
-const app = express();
+api.use("/", express.static("dist"));
 
-app.get("/message", (_, res) => res.send("Hello from express!"));
-
-ViteExpress.listen(app, PORT, () =>
-  console.log(`Server is listening on port ${PORT}`)
-);
+api.listen(PORT, () => {
+  console.log(`API server is running on http://localhost:${PORT}`);
+});
