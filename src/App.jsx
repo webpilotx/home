@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [onlineApps, setOnlineApps] = useState([]);
-  const appPrefixes = ["/weather", "/finance", "/news"]; // Add your app prefixes here
+  const appPrefixes = import.meta.env.VITE_APPS.split(",").map(
+    (app) => `/${app}`
+  );
 
   useEffect(() => {
     async function verifyToken() {
