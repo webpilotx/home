@@ -5,6 +5,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    console.log("VITE_PUBLIC_KEY:", import.meta.env.VITE_PUBLIC_KEY); // Log VITE_PUBLIC_KEY
+
     async function verifyToken() {
       try {
         const token = localStorage.getItem("token");
