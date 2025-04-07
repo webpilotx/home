@@ -79,7 +79,7 @@ function App() {
 
       {/* Main Content */}
       <div className="flex flex-col items-center justify-center py-12">
-        <h1 className="text-4xl font-bold mb-6">Welcome to {title}</h1>
+        <h1 className="text-4xl font-bold mb-6">{title}</h1>
         <div className="w-full max-w-4xl bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Available Apps</h2>
           <ul className="space-y-4">
